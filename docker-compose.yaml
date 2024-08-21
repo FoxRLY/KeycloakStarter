@@ -1,10 +1,33 @@
 services:
   keycloak:
-    image: keycloak/keycloak:17.0.0
+    image: quay.io/keycloak/keycloak:24.0.2
     command: start-dev
-    container_name: keycloak-remaster
+    container_name: keycloak
     environment:
-      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN:          "admin"
       KEYCLOAK_ADMIN_PASSWORD: "admin"
+      KC_DB:                   "postgres"
+      KC_DB_URL_HOST:          "postgres"
+      KC_DB_URL_DATABASE:      "database"
+      KC_DB_USERNAME:          "user"
+      KC_DB_PASSWORD:          "password"
+      KC_DB_SCHEMA:            "public"
     ports:
-      - 8080:8080
+      - "8080:8080"
+    networks:
+      - net
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_DB: "database"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+    ports:
+      - "5432:5432"
+    networks:
+      - net
+networks:
+  net:
+    driver: bridge
+
