@@ -1,0 +1,10 @@
+services:
+  keycloak:
+    image: keycloak/keycloak:17.0.0
+    command: start-dev
+    container_name: keycloak-remaster
+    environment:
+      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+    ports:
+      - 8080:8080
